@@ -122,46 +122,22 @@ public class FloatingDecimal{
     /*
      * Keep big powers of 5 handy for future reference.
      */
-    private static FDBigInt b5p[];
+    private static final FDBigInt[] b5p = computeBig5Pow();
 
-    private static synchronized FDBigInt
-    big5pow( int p ){
+    private static FDBigInt big5pow( int p ) {
         assert p >= 0 : p; // negative power of 5
-        if ( b5p == null ){
-            b5p = new FDBigInt[ p+1 ];
-        }else if (b5p.length <= p ){
-            FDBigInt t[] = new FDBigInt[ p+1 ];
-            System.arraycopy( b5p, 0, t, 0, b5p.length );
-            b5p = t;
+        return b5p[p];
+    }
+
+    private static FDBigInt[] computeBig5Pow() {
+        FDBigInt[] result = new FDBigInt[442];
+
+        result[0] = new FDBigInt(1);
+        for (int p = 1; p < result.length; p++) {
+            result[p] = result[p - 1].mult(5);
         }
-        if ( b5p[p] != null )
-            return b5p[p];
-        else if ( p < small5pow.length )
-            return b5p[p] = new FDBigInt( small5pow[p] );
-        else if ( p < long5pow.length )
-            return b5p[p] = new FDBigInt( long5pow[p] );
-        else {
-            // construct the value.
-            // recursively.
-            int q, r;
-            // in order to compute 5^p,
-            // compute its square root, 5^(p/2) and square.
-            // or, let q = p / 2, r = p -q, then
-            // 5^p = 5^(q+r) = 5^q * 5^r
-            q = p >> 1;
-            r = p - q;
-            FDBigInt bigq =  b5p[q];
-            if ( bigq == null )
-                bigq = big5pow ( q );
-            if ( r < small5pow.length ){
-                return (b5p[p] = bigq.mult( small5pow[r] ) );
-            }else{
-                FDBigInt bigr = b5p[ r ];
-                if ( bigr == null )
-                    bigr = big5pow( r );
-                return (b5p[p] = bigq.mult( bigr ) );
-            }
-        }
+
+        return result;
     }
 
     //
