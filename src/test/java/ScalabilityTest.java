@@ -1,3 +1,5 @@
+import io.airlift.floatingdecimal.FloatingDecimal;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
@@ -11,6 +13,13 @@ public class ScalabilityTest
 {
     public static void main(String[] args) throws InterruptedException, ExecutionException
     {
+        if (FloatingDecimal.isPatchInstalled()) {
+            System.out.println("***** Patch is installed *****");
+        }
+        else {
+            System.out.println("***** Patch is NOT installed *****");
+        }
+
         ExecutorService executor = Executors.newCachedThreadPool();
         ExecutorCompletionService<Long> completion = new ExecutorCompletionService<>(executor);
 

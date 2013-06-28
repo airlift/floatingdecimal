@@ -31,6 +31,8 @@ import sun.misc.FloatConsts;
 import java.util.regex.*;
 
 public class FloatingDecimal{
+    public static boolean MARKER = true; // to be able to detect whether the patch is installed
+
     boolean     isExceptional;
     boolean     isNegative;
     int         decExponent;
