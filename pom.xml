@@ -5,7 +5,7 @@
 
     <groupId>io.airlift</groupId>
     <artifactId>floatingdecimal</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -32,7 +32,8 @@
         <connection>scm:git:git://github.com/airlift/floatingdecimal.git</connection>
         <developerConnection>scm:git:git@github.com:airlift/floatingdecimal.git</developerConnection>
         <url>http://github.com/airlift/floatingdecimal/tree/master</url>
-    </scm>
+      <tag>0.1</tag>
+  </scm>
 
     <properties>
         <air.check.skip-extended>true</air.check.skip-extended>
