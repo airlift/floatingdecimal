@@ -33,12 +33,13 @@
         <developerConnection>scm:git:git@github.com:airlift/floatingdecimal.git</developerConnection>
         <url>http://github.com/airlift/floatingdecimal/tree/master</url>
       <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <properties>
         <air.check.skip-extended>true</air.check.skip-extended>
         <air.check.fail-all>false</air.check.fail-all>
         <air.check.fail-basic>true</air.check.fail-basic>
+        <air.test.fork-mode>once</air.test.fork-mode>
     </properties>
 
     <distributionManagement>
@@ -53,4 +54,23 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration combine.children="append">
+                    <argLine>-Xbootclasspath/p:${project.build.outputDirectory}</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
