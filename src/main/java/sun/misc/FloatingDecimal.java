@@ -28,6 +28,8 @@ package sun.misc;
 import sun.misc.FpUtils;
 import sun.misc.DoubleConsts;
 import sun.misc.FloatConsts;
+
+import java.lang.management.ManagementFactory;
 import java.util.regex.*;
 
 public class FloatingDecimal{
@@ -43,6 +45,18 @@ public class FloatingDecimal{
     boolean     mustSetRoundDir = false;
     boolean     fromHex = false;
     int         roundDir = 0; // set by doubleValue
+
+    static {
+        if (!ManagementFactory.getRuntimeMXBean().getSpecVersion().equals("1.7")) {
+            throw new AssertionError("FloatingDecimal patch is only compatible with Java 7");
+        }
+    }
+
+    // Forward-compatible interface for Java 8
+    public static String toJavaFormatString(double value)
+    {
+        throw new UnsupportedOperationException("Unsupported method");
+    }
 
     private     FloatingDecimal( boolean negSign, int decExponent, char []digits, int n,  boolean e )
     {
